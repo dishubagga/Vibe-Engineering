@@ -1,0 +1,143 @@
+{
+  "permissions": {
+    "allow": [
+      "Edit",
+      "Read",
+      "Bash(npm install)",
+      "Bash(npm run dev)",
+      "Bash(npm run build)",
+      "Bash(npm test)",
+      "Bash(node server.js)",
+      "Bash(npx vite)",
+      "Bash(mvn clean)",
+      "Bash(mvn test)",
+      "Bash(mvn spring-boot:run)"
+    ],
+    "ask": [
+      "Bash(git push)",
+      "Bash(git commit)",
+      "Bash(npm publish)",
+      "Bash(docker build)",
+      "Bash(docker push)"
+    ],
+    "deny": [
+      "Bash(rm -rf)",
+      "Bash(sudo)",
+      "Bash(curl|wget) -- external downloads"
+    ]
+  },
+  "model": {
+    "default": "claude-sonnet-4-6",
+    "reviewer": "claude-opus-4-6"
+  },
+  "agents": {
+    "architect-agent": {
+      "model": "default",
+      "readOnly": true,
+      "scope": "all",
+      "description": "System design and feature planning"
+    },
+    "frontend-agent": {
+      "model": "default",
+      "scope": "frontend/",
+      "description": "React component development"
+    },
+    "backend-agent": {
+      "model": "default",
+      "scope": "backend/",
+      "description": "Spring Boot service development"
+    },
+    "database-agent": {
+      "model": "default",
+      "scope": "database/",
+      "description": "MongoDB schema design"
+    },
+    "reviewer-agent": {
+      "model": "reviewer",
+      "readOnly": true,
+      "scope": "all",
+      "description": "Code review with security & quality checks"
+    },
+    "devops-agent": {
+      "model": "default",
+      "scope": [
+        "docker/",
+        ".github/",
+        "terraform/",
+        "k8s/"
+      ],
+      "description": "Infrastructure and deployment"
+    },
+    "qa-agent": {
+      "model": "default",
+      "scope": "all",
+      "description": "Test generation and quality assurance"
+    }
+  },
+  "commands": {
+    "plan-feature": {
+      "delegates_to": "architect-agent",
+      "description": "Plan feature with tasks, APIs, DB schema"
+    },
+    "build-frontend": {
+      "delegates_to": "frontend-agent",
+      "description": "Build React components and state"
+    },
+    "build-backend": {
+      "delegates_to": "backend-agent",
+      "description": "Build Spring Boot services"
+    },
+    "build-db": {
+      "delegates_to": "database-agent",
+      "description": "Design MongoDB collections"
+    },
+    "review-code": {
+      "delegates_to": "reviewer-agent",
+      "description": "Review code quality and security"
+    },
+    "run-tests": {
+      "delegates_to": "qa-agent",
+      "description": "Generate and run tests"
+    },
+    "fix-bug": {
+      "delegates_to": "all",
+      "description": "Debug and fix issues"
+    },
+    "deploy": {
+      "delegates_to": "devops-agent",
+      "description": "Deploy to production or staging"
+    }
+  },
+  "skills": {
+    "frontend": [
+      "react-patterns.md",
+      "state-management.md"
+    ],
+    "backend": [
+      "spring-boot-patterns.md",
+      "api-design.md"
+    ],
+    "database": [
+      "mongodb-design.md"
+    ],
+    "infrastructure": [
+      "docker-best-practices.md",
+      "terraform-patterns.md"
+    ],
+    "cross-cutting": [
+      "security.md",
+      "testing.md"
+    ]
+  },
+  "outputStyle": "structured",
+  "spinnerVerbs": [
+    "Architecting the system",
+    "Building React components",
+    "Crafting Spring Boot services",
+    "Designing MongoDB schemas",
+    "Reviewing code quality",
+    "Deploying to production",
+    "Running tests",
+    "Fixing bugs"
+  ]
+}
