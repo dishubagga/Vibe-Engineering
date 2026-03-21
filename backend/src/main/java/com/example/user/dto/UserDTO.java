@@ -1,0 +1,32 @@
+package com.example.user.dto;
+
+import lombok.*;
+import com.example.user.entity.User;
+import java.time.LocalDateTime;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
+public class UserDTO {
+  private Long id;
+  private String email;
+  private String name;
+  private String phone;
+  private String status;
+  private LocalDateTime createdAt;
+  private LocalDateTime updatedAt;
+
+  public static UserDTO fromEntity(User user) {
+    return UserDTO.builder()
+        .id(user.getId())
+        .email(user.getEmail())
+        .name(user.getName())
+        .phone(user.getPhone())
+        .status(user.getStatus())
+        .createdAt(user.getCreatedAt())
+        .updatedAt(user.getUpdatedAt())
+        .build();
+  }
+}

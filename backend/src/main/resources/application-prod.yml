@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/fullstack_db
+    username: postgres
+    password: password
+    driver-class-name: org.postgresql.Driver
+  
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL10Dialect
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+  
+  h2:
+    console:
+      enabled: false
+
+server:
+  port: 8080
+
+logging:
+  level:
+    root: WARN
+    com.example: INFO
