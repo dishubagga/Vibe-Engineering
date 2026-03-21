@@ -258,6 +258,7 @@ When working on this project, Claude will:
 3. ✅ Run `/security-check` before major changes
 4. ✅ Ensure tests pass and coverage is maintained
 5. ✅ Follow the style guides in `.claude/skills/`
+6. ✅ **Always create a step-by-step plan before executing any command or slash command**, and wait for user confirmation before proceeding
 
 ## Optional Components (Add When Project Grows)
 
