@@ -17,7 +17,8 @@
    - Database schema changes
    - Edge cases & error scenarios
    - Validation rules
-4. **Output**: Structured plan with dependencies and timeline
+4. **Document Creation**: Create a detailed feature document (e.g., `docs/features/<feature-name>.md`) containing the entire feature plan.
+5. **Output**: Structured plan summary with dependencies and timeline.
 
 ## Examples
 

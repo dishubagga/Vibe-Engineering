@@ -43,6 +43,16 @@ public class User {
   @Builder.Default
   private String status = "ACTIVE";
 
+  private Integer age;
+
+  private Double weightKg;
+
+  private Double heightCm;
+
+  @Column(nullable = false)
+  @Builder.Default
+  private Boolean onboardingCompleted = false;
+
   @CreationTimestamp
   @Column(nullable = false, updatable = false)
   private LocalDateTime createdAt;

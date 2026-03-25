@@ -26,10 +26,7 @@
       "Bash(curl|wget) -- external downloads"
     ]
   },
-  "model": {
-    "default": "claude-sonnet-4-6",
-    "reviewer": "claude-opus-4-6"
-  },
+  "model": "claude-sonnet-4-6",
   "agents": {
     "architect-agent": {
       "model": "default",
@@ -53,10 +50,16 @@
       "description": "MongoDB schema design"
     },
     "reviewer-agent": {
-      "model": "reviewer",
+      "model": "claude-opus-4-6",
       "readOnly": true,
       "scope": "all",
       "description": "Code review with security & quality checks"
+    },
+    "git-diff-reviewer-agent": {
+      "model": "sonnet",
+      "readOnly": true,
+      "scope": "all",
+      "description": "Code review focused on git diffs with high-reasoning LLMs"
     },
     "devops-agent": {
       "model": "default",
@@ -75,6 +78,10 @@
     }
   },
   "commands": {
+    "plan-application": {
+      "delegates_to": "architect-agent",
+      "description": "Plan an entire application broken down into multi-feature roadmaps"
+    },
     "plan-feature": {
       "delegates_to": "architect-agent",
       "description": "Plan feature with tasks, APIs, DB schema"
@@ -94,6 +101,10 @@
     "review-code": {
       "delegates_to": "reviewer-agent",
       "description": "Review code quality and security"
+    },
+    "review-git-diff": {
+      "delegates_to": "git-diff-reviewer-agent",
+      "description": "Review uncommitted changes using deep reasoning models"
     },
     "run-tests": {
       "delegates_to": "qa-agent",
@@ -130,14 +141,17 @@
     ]
   },
   "outputStyle": "structured",
-  "spinnerVerbs": [
-    "Architecting the system",
-    "Building React components",
-    "Crafting Spring Boot services",
-    "Designing MongoDB schemas",
-    "Reviewing code quality",
-    "Deploying to production",
-    "Running tests",
-    "Fixing bugs"
-  ]
+  "spinnerVerbs": {
+    "mode": "replace",
+    "verbs": [
+      "Architecting the system",
+      "Building React components",
+      "Crafting Spring Boot services",
+      "Designing MongoDB schemas",
+      "Reviewing code quality",
+      "Deploying to production",
+      "Running tests",
+      "Fixing bugs"
+    ]
+  }
 }

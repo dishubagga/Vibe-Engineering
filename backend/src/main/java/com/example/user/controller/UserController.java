@@ -7,6 +7,8 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +20,33 @@ import java.util.List;
 public class UserController {
 
   private final UserService userService;
+
+  @GetMapping("/me")
+  public ResponseEntity<ApiResponse<UserDTO>> getMe(
+      @AuthenticationPrincipal UserDetails userDetails) {
+    UserDTO user = userService.getUserByEmail(userDetails.getUsername());
+    return ResponseEntity.ok(ApiResponse.ok(user));
+  }
+
+  @PutMapping("/me")
+  public ResponseEntity<ApiResponse<UserDTO>> updateMe(
+      @AuthenticationPrincipal UserDetails userDetails,
+      @Valid @RequestBody UpdateUserRequest request) {
+    UserDTO user = userService.updateMe(userDetails.getUsername(), request);
+    return ResponseEntity.ok(ApiResponse.ok(user));
+  }
+
+  @PostMapping("/me/onboarding")
+  public ResponseEntity<ApiResponse<Void>> completeOnboarding(
+      @AuthenticationPrincipal UserDetails userDetails,
+      @Valid @RequestBody OnboardingRequest request) {
+    userService.completeOnboarding(userDetails.getUsername(), request);
+    return ResponseEntity.ok(ApiResponse.<Void>builder()
+        .success(true)
+        .message("Onboarding completed")
+        .code(200)
+        .build());
+  }
 
   @GetMapping
   public ResponseEntity<ApiResponse<List<UserDTO>>> getAllUsers() {

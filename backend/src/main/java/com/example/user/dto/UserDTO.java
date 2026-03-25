@@ -15,6 +15,10 @@ public class UserDTO {
   private String name;
   private String phone;
   private String status;
+  private Integer age;
+  private Double weightKg;
+  private Double heightCm;
+  private Boolean onboardingCompleted;
   private LocalDateTime createdAt;
   private LocalDateTime updatedAt;
 
@@ -25,6 +29,10 @@ public class UserDTO {
         .name(user.getName())
         .phone(user.getPhone())
         .status(user.getStatus())
+        .age(user.getAge())
+        .weightKg(user.getWeightKg())
+        .heightCm(user.getHeightCm())
+        .onboardingCompleted(user.getOnboardingCompleted())
         .createdAt(user.getCreatedAt())
         .updatedAt(user.getUpdatedAt())
         .build();

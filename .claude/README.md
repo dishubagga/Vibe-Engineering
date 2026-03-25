@@ -27,6 +27,7 @@ Code Generation / Analysis
 | **`/build-backend`** | Build Spring Boot services | Backend Agent | Controllers, services, repositories |
 | **`/build-db`** | Design MongoDB schemas | Database Agent | Collections, indexes, relationships |
 | **`/review-code`** | Code quality review | Reviewer Agent | Issues found, severity ratings, fixes |
+| **`/review-git-diff`** | Uncommitted code review | Git Diff Reviewer | Logical issues, diff-specific regressions |
 | **`/run-tests`** | Generate & run tests | QA Agent | Test results, coverage reports |
 | **`/fix-bug`** | Debug and fix issues | Appropriate Agent | Root cause, fix, regression tests |
 | **`/deploy`** | Deploy to production | DevOps Agent | Docker, GitHub Actions, env config |
@@ -44,6 +45,7 @@ Each agent has specific responsibilities, constraints, and expertise.
 | **Backend** | Spring Boot services | Sonnet | backend/ | Yes |
 | **Database** | MongoDB schema design | Sonnet | database/ | Yes |
 | **Reviewer** | Code quality & security | **Opus** | All dirs | No (read-only) |
+| **Git Diff Reviewer** | Diff logic & reasoning | **o3-mini** | All dirs | No (read-only) |
 | **DevOps** | Infrastructure & deployment | Sonnet | docker/, .github/, tf/ | Yes |
 | **QA** | Test generation & coverage | Sonnet | All dirs | Yes |
 
@@ -215,6 +217,7 @@ Knowledge modules that agents use to generate code.
 │   ├── build-backend.md
 │   ├── build-db.md
 │   ├── review-code.md
+│   ├── review-git-diff.md
 │   ├── run-tests.md
 │   ├── fix-bug.md
 │   └── deploy.md
@@ -225,6 +228,7 @@ Knowledge modules that agents use to generate code.
 │   ├── backend-agent.md        # Spring Boot development
 │   ├── database-agent.md       # MongoDB design
 │   ├── reviewer-agent.md       # Code review
+│   ├── git-diff-reviewer-agent.md # Git diff code review
 │   ├── devops-agent.md         # Infrastructure
 │   └── qa-agent.md             # Testing
 │
@@ -443,6 +447,7 @@ jobs:
 /build-backend <task>                 # Build Spring Boot service
 /build-db <description>               # Design MongoDB collection
 /review-code [path]                   # Review code quality
+/review-git-diff [branch|commit]      # Review uncommitted changes
 /run-tests [scope] [--coverage]       # Run tests
 /fix-bug <error>                      # Debug and fix issue
 /deploy [environment]                 # Deploy to prod/staging
@@ -455,6 +460,7 @@ Frontend → Build React
 Backend → Build APIs
 Database → Design schemas
 Reviewer → Quality check (Opus model)
+Git Diff Reviewer → Logic check for diffs (o3-mini model)
 DevOps → Deploy, Infrastructure
 QA → Generate tests
 ```

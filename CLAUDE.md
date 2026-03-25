@@ -149,6 +149,7 @@ To update: Use `/manage-versions` command.
 | `/security-check [scope]` | Scan for vulnerabilities |
 | `/manage-versions [cmd]` | Check/update pinned versions |
 | `/review-code [path]` | AI code review |
+| `/review-git-diff [branch]` | AI code review using diff reasoning |
 
 See `.claude/README.md` for detailed documentation.
 
@@ -271,7 +272,8 @@ Create specialized AI workers with custom instructions:
 .claude/agents/
 ├── frontend-agent.md    # Specialized for React tasks
 ├── backend-agent.md     # Specialized for Spring Boot tasks
-└── reviewer-agent.md    # Specialized for code reviews
+├── reviewer-agent.md    # Specialized for code reviews
+└── git-diff-reviewer-agent.md # Git diff reasoning code review
 ```
 
 **Add when:**

@@ -5,6 +5,7 @@ import com.example.common.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,6 +29,14 @@ public class GlobalExceptionHandler {
     log.warn("Duplicate resource: {}", ex.getMessage());
     ApiResponse<Void> error = ApiResponse.error(ex.getMessage(), 409);
     return ResponseEntity.status(HttpStatus.CONFLICT).body(error);
+  }
+
+  @ExceptionHandler(BadCredentialsException.class)
+  public ResponseEntity<ApiResponse<Void>> handleBadCredentials(
+      BadCredentialsException ex, WebRequest request) {
+    log.warn("Bad credentials: {}", ex.getMessage());
+    ApiResponse<Void> error = ApiResponse.error("Invalid credentials", 401);
+    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
   }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)

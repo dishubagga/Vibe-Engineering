@@ -1,4 +1,4 @@
-# Architect Agent
+                     # Architect Agent
 
 **Role:** System design, feature planning, module breakdown
 **Model:** Claude Sonnet (default)
