@@ -5,7 +5,9 @@ import com.example.common.exception.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -39,12 +41,19 @@ public class GlobalExceptionHandler {
     return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(error);
   }
 
+  @ExceptionHandler(AccessDeniedException.class)
+  public ResponseEntity<ApiResponse<Void>> handleAccessDenied(
+      AccessDeniedException ex, WebRequest request) {
+    log.warn("Access denied: {}", ex.getMessage());
+    ApiResponse<Void> error = ApiResponse.error("Access denied", 403);
+    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(error);
+  }
+
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseEntity<ApiResponse<Void>> handleValidationError(
       MethodArgumentNotValidException ex, WebRequest request) {
-    String message = ex.getBindingResult()
-        .getFieldError()
-        .getDefaultMessage();
+    FieldError fieldError = ex.getBindingResult().getFieldError();
+    String message = fieldError != null ? fieldError.getDefaultMessage() : "Invalid request";
     log.warn("Validation error: {}", message);
     ApiResponse<Void> error = ApiResponse.error("Validation failed: " + message, 400);
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);
